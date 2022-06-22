@@ -9,11 +9,11 @@ using Tester01.Data;
 
 #nullable disable
 
-namespace Tester01.Migrations
+namespace seCuidaBenca.Migrations
 {
     [DbContext(typeof(UsuarioContext))]
-    [Migration("20220622040720_second")]
-    partial class second
+    [Migration("20220622204811_InitialUser")]
+    partial class InitialUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

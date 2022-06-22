@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using seCuidaBenca.Data;
+using seCuidaBenca.Repository;
+using seCuidaBenca.Repository.Interfaces;
 using Tester01.Data;
 using Tester01.Repository;
 
@@ -22,7 +24,7 @@ builder.Services.AddDbContext<OcorrenciaContext>(option =>
 });
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
+builder.Services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

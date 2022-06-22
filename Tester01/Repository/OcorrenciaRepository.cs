@@ -38,12 +38,9 @@ namespace seCuidaBenca.Repository
             }
         }
 
-        public void DeletarOcorrenciaPorId(int id)
+        public void DeletarOcorrencia(Ocorrencia ocorrencia)
         {
-            var ocorrencia = PesquisarPorId(id);
-
-            if (ocorrencia != null)
-                context.Remove(id);
+            context.Remove(ocorrencia);
         }
 
         public async Task<Ocorrencia> PesquisarPorId(int id)

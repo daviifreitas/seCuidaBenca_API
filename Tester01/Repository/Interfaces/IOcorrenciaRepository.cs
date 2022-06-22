@@ -6,7 +6,7 @@
         Task<IEnumerable<Ocorrencia>> BuscarOcorrencias();
         void CriarOcorrencia(Ocorrencia ocorrenciaParaSerCriada);
         Task<Ocorrencia> AlterarOcorrenciaPorId(int id);
-        void DeletarOcorrenciaPorId(int id);
+        void DeletarOcorrencia(Ocorrencia ocorrencia);
         Task<bool> saveChangesAsync();
     }
 }

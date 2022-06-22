@@ -39,15 +39,28 @@ namespace seCuidaBenca.Controllers
                 : BadRequest("Error ao salvar a ocorrência !!!");
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put(Ocorrencia ocorrenciaParaAlteracao , int id)
         {
-            var ocorrenciaBanco = repository.PesquisarPorId(id);
+            var ocorrenciaBanco = await repository.PesquisarPorId(id);
 
-            if(ocorrenciaParaAlteracao.Id_Ocorrencia != ocorrenciaBanco.Id)
+            if(ocorrenciaParaAlteracao == null )
             {
                 return NotFound("A ocorrência não foi encontrada !!!!");
             }
+
+            ocorrenciaBanco.DescricaoDaOcorrencia = ocorrenciaParaAlteracao.DescricaoDaOcorrencia ?? ocorrenciaBanco.DescricaoDaOcorrencia;
+
+            if (ocorrenciaBanco.Id_DoUsuario == ocorrenciaParaAlteracao.Id_DoUsuario)
+            {
+                ocorrenciaBanco.Id_DoUsuario = ocorrenciaParaAlteracao.Id_DoUsuario;
+            } 
+            else
+            {
+                ocorrenciaBanco.Id_DoUsuario = ocorrenciaBanco.Id_DoUsuario;
+            }
+            
+            ocorrenciaParaAlteracao.Id_Ocorrencia = id;
 
             repository.CriarOcorrencia(ocorrenciaParaAlteracao);
 
@@ -57,14 +70,14 @@ namespace seCuidaBenca.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ocorrencia = repository.PesquisarPorId(id);
+            var ocorrencia = await repository.PesquisarPorId(id);
 
             if(ocorrencia == null)
             {
                 return NotFound("Ocorrencia não encontrada !!!!");
             }
 
-            repository.DeletarOcorrenciaPorId(id);
+            repository.DeletarOcorrencia(ocorrencia);
 
             return Ok("Ocorrência deletada com sucesso !!!!");
         }

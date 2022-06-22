@@ -12,6 +12,4 @@ public class Ocorrencia
 	public int Id_DoUsuario { get; set; }
 	public string DescricaoDaOcorrencia { get; set; }
 
-    
-	public virtual Usuario Usuario { get; set; }
 }

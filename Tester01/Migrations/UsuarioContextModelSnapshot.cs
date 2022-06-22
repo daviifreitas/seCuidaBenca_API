@@ -8,7 +8,7 @@ using Tester01.Data;
 
 #nullable disable
 
-namespace Tester01.Migrations
+namespace seCuidaBenca.Migrations
 {
     [DbContext(typeof(UsuarioContext))]
     partial class UsuarioContextModelSnapshot : ModelSnapshot
