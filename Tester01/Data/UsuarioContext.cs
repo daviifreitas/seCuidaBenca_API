@@ -7,6 +7,7 @@ namespace Tester01.Data
     {
         public UsuarioContext(DbContextOptions<UsuarioContext> options) : base(options)
         {
+            
         }
         public DbSet<Usuario> usuarios { get; set; }
 

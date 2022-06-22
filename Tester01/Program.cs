@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using seCuidaBenca.Data;
 using Tester01.Data;
 using Tester01.Repository;
 
@@ -13,6 +14,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UsuarioContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
+});
+
+builder.Services.AddDbContext<OcorrenciaContext>(option =>
+{
+    option.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();

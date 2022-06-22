@@ -62,6 +62,7 @@ namespace Tester01.Controllers
         }
 
         [HttpDelete("{id}")]
+       
         public async Task<IActionResult> Delete(int id)
         {
             var usuario = await repository.buscarUsuario(id);
