@@ -11,5 +11,6 @@ public class Ocorrencia
 	public int Id_Ocorrencia { get; set; }
 	public int Id_DoUsuario { get; set; }
 	public string DescricaoDaOcorrencia { get; set; }
+	public DateTime? CreatedDate { get; set; }
 
 }

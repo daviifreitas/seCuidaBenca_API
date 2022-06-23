@@ -9,5 +9,11 @@ namespace seCuidaBenca.Data
         }
 
         public DbSet<Ocorrencia> Ocorrencia { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder model)
+        {
+            model.Entity<Ocorrencia>();
+        }
+
     }
 }

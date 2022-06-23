@@ -13,21 +13,11 @@ namespace seCuidaBenca.Repository
             this.context = context;
         }
 
-        public async Task<Ocorrencia> AlterarOcorrenciaPorId(int id)
+        public async Task<List<Ocorrencia>> BuscarOcorrencias()
         {
-            var ocorrencia = PesquisarPorId(id);
+            List<Ocorrencia> ocorrencias = await context.Ocorrencia.ToListAsync();
 
-            if(ocorrencia != null)
-            {
-                context.Remove(PesquisarPorId(id));
-                context.Add(ocorrencia);
-            }
-            return await ocorrencia;
-        }
-
-        public async Task<IEnumerable<Ocorrencia>> BuscarOcorrencias()
-        {
-            return await context.Ocorrencia.ToListAsync();
+            return ocorrencias;
         }
 
         public void CriarOcorrencia(Ocorrencia ocorrenciaParaSerCriada)
@@ -38,9 +28,10 @@ namespace seCuidaBenca.Repository
             }
         }
 
-        public void DeletarOcorrencia(Ocorrencia ocorrencia)
+        public void DeletarOcorrencia(int idDaOcorrencia)
         {
-            context.Remove(ocorrencia);
+            Ocorrencia ocorrenciaParaSerDeletada = PesquisarPorId(idDaOcorrencia).Result;
+            context.Remove(ocorrenciaParaSerDeletada);
         }
 
         public async Task<Ocorrencia> PesquisarPorId(int id)

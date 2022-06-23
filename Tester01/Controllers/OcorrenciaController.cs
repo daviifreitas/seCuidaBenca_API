@@ -17,54 +17,27 @@ namespace seCuidaBenca.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var ocorrencias = repository.BuscarOcorrencias();
+            List<Ocorrencia> ocorrencias = await repository.BuscarOcorrencias();
 
-            return await ocorrencias == null ? BadRequest("Ocorrencias não encontradas") : Ok(ocorrencias);
+            return ocorrencias.Count == 0 ? BadRequest("Ocorrencias não encontradas") : Ok(ocorrencias);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var ocorrencia = repository.PesquisarPorId(id);
+            Ocorrencia ocorrencia = await repository.PesquisarPorId(id);
 
-            return await ocorrencia != null ? Ok(ocorrencia) : NotFound("Ocorrência não encontrada !!!!");
+            return  ocorrencia != null ? Ok(ocorrencia) : NotFound("Ocorrência não encontrada !!!!");
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(Ocorrencia ocorrenciaParaSerAdicionada)
         {
+            ocorrenciaParaSerAdicionada.CreatedDate = DateTime.Now;
             repository.CriarOcorrencia(ocorrenciaParaSerAdicionada);
 
             return await repository.saveChangesAsync() ? Ok("Ocorrência adicionada com sucesso  !!!!")
                 : BadRequest("Error ao salvar a ocorrência !!!");
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Ocorrencia ocorrenciaParaAlteracao , int id)
-        {
-            var ocorrenciaBanco = await repository.PesquisarPorId(id);
-
-            if(ocorrenciaParaAlteracao == null )
-            {
-                return NotFound("A ocorrência não foi encontrada !!!!");
-            }
-
-            ocorrenciaBanco.DescricaoDaOcorrencia = ocorrenciaParaAlteracao.DescricaoDaOcorrencia ?? ocorrenciaBanco.DescricaoDaOcorrencia;
-
-            if (ocorrenciaBanco.Id_DoUsuario == ocorrenciaParaAlteracao.Id_DoUsuario)
-            {
-                ocorrenciaBanco.Id_DoUsuario = ocorrenciaParaAlteracao.Id_DoUsuario;
-            } 
-            else
-            {
-                ocorrenciaBanco.Id_DoUsuario = ocorrenciaBanco.Id_DoUsuario;
-            }
-            
-            ocorrenciaParaAlteracao.Id_Ocorrencia = id;
-
-            repository.CriarOcorrencia(ocorrenciaParaAlteracao);
-
-            return await repository.saveChangesAsync() ? Ok("Ocorrência adicionada com sucesso !!!") : BadRequest("Error ao adicionar ocorrência !!!");
         }
 
         [HttpDelete("{id}")]
@@ -77,9 +50,10 @@ namespace seCuidaBenca.Controllers
                 return NotFound("Ocorrencia não encontrada !!!!");
             }
 
-            repository.DeletarOcorrencia(ocorrencia);
+            repository.DeletarOcorrencia(id);
 
-            return Ok("Ocorrência deletada com sucesso !!!!");
+            return await repository.saveChangesAsync() ? Ok("Ocorrência deletado com sucesso !!!") : 
+                BadRequest("Error no sistema !!!");
         }
     }
 }

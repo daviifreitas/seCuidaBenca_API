@@ -3,10 +3,9 @@
     public interface IOcorrenciaRepository
     {
         Task<Ocorrencia> PesquisarPorId(int id); 
-        Task<IEnumerable<Ocorrencia>> BuscarOcorrencias();
+        Task<List<Ocorrencia>> BuscarOcorrencias();
         void CriarOcorrencia(Ocorrencia ocorrenciaParaSerCriada);
-        Task<Ocorrencia> AlterarOcorrenciaPorId(int id);
-        void DeletarOcorrencia(Ocorrencia ocorrencia);
+        void DeletarOcorrencia(int idDaOcorrencia);
         Task<bool> saveChangesAsync();
     }
 }
